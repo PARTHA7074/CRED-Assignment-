@@ -1,6 +1,5 @@
 package com.partha.credassignment.ui.composableComponents
 
-import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,18 +20,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlin.math.cos
-import kotlin.math.sin
 
 @Composable
 fun CreditAmountSlide(
@@ -82,12 +75,15 @@ fun CreditAmountSlide(
                         .background(Color.White, shape = RoundedCornerShape(16.dp))
                         .padding(16.dp)
                 ) {
-                    CircularProgressWithSolidColor(
+                    CircularDraggableProgressBar(
                         modifier = Modifier
                             .padding(top = 32.dp, bottom = 64.dp)
                             .size(240.dp)
                             .align(Alignment.Center),
-                        progress = creditAmount.toFloat()/maxCreditAmount
+                        initialProgress = creditAmount.toFloat()/maxCreditAmount,
+                        onProgressChange = { newProgress ->
+                            creditAmount = (newProgress * maxCreditAmount).toInt()
+                        }
                     )
                     Column(
                         modifier = Modifier.align(Alignment.Center),
@@ -119,50 +115,6 @@ fun CreditAmountSlide(
 }
 
 @Composable
-fun CircularProgressWithSolidColor(
-    modifier: Modifier = Modifier,
-    progress: Float,
-    progressColor: Color = Color(0xFFD9735B),
-    backGroundCircleColor: Color = Color(0xFFfee7dd)
-) {
-    Canvas(modifier = modifier) {
-        val strokeWidth = 12.dp.toPx()
-        val radius = size.minDimension / 2 - strokeWidth / 2
-
-        val startAngle = -90f
-        val sweepAngle = 360f * progress
-
-        // Draw background circle
-        drawCircle(
-            color = backGroundCircleColor,
-            radius = radius,
-            style = Stroke(width = strokeWidth)
-        )
-
-        // Draw solid color progress
-        drawArc(
-            color = progressColor,
-            startAngle = startAngle,
-            sweepAngle = sweepAngle,
-            useCenter = false,
-            style = Stroke(width = strokeWidth, cap = StrokeCap.Round),
-            size = Size(radius * 2, radius * 2),
-            topLeft = Offset((size.width - radius * 2) / 2, (size.height - radius * 2) / 2)
-        )
-
-        // Small black circular button on the ring
-        drawCircle(
-            color = Color.Black,
-            radius = 8.dp.toPx(),
-            center = Offset(
-                x = center.x + radius * cos(Math.toRadians((startAngle + sweepAngle).toDouble())).toFloat(),
-                y = center.y + radius * sin(Math.toRadians((startAngle + sweepAngle).toDouble())).toFloat()
-            )
-        )
-    }
-}
-
-@Composable
 fun StackedBehindCreditAmountSlideHeader(
     modifier: Modifier = Modifier,
     creditAmount: Int = 0
@@ -180,7 +132,6 @@ fun StackedBehindCreditAmountSlideHeader(
         DropDownArrow()
     }
 }
-
 
 @Composable
 @Preview
