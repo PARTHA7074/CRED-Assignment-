@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.partha.credassignment.ui.composableComponents.CreditAmountSlide
+import com.partha.credassignment.ui.composableComponents.EMISelectionSlide
 import com.partha.credassignment.ui.composableComponents.StackView
 import com.partha.credassignment.ui.theme.BackgroundColor
 import com.partha.credassignment.ui.theme.CREDAssignmentTheme
@@ -77,7 +78,7 @@ fun HomeScreen(
             showSliders = showSliders,
             contents = listOf(
                 { CreditAmountSlide(color = Color(0xFF14191d), onClick = { onToggleState(1, false) }, isStackedBehind = totalExpendedCount>0) },
-                { CreditAmountSlide(color = Color(0xFF1a1927), onClick = { onToggleState(2, false) }, isStackedBehind = totalExpendedCount>1) },
+                { EMISelectionSlide(color = Color(0xFF1a1927), onClick = { onToggleState(2, false) }, isStackedBehind = totalExpendedCount>1) },
                 { CreditAmountSlide(color = Color(0xFF23283c)) }
             )
         )

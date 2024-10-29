@@ -59,11 +59,11 @@ fun CreditAmountSlide(
                 clip = false
             )
             .background(color, shape = RoundedCornerShape(16.dp))
-            .clickable { onClick() }
+            .clickable(enabled = isStackedBehind) { onClick() }
             .padding(horizontal = 25.dp, vertical = 16.dp)
     ) {
         if (isStackedBehind){
-            CreditAmountSlideHeader(
+            StackedBehindCreditAmountSlideHeader(
                 modifier = Modifier.align(Alignment.TopStart),
                 creditAmount = creditAmount
             )
@@ -73,25 +73,15 @@ fun CreditAmountSlide(
                     .fillMaxSize(),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Top
-            )  {
-                Text(
-                    text = "nikunj, how much do you need?",
-                    color = Color.White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier.padding(bottom = 8.dp)
+            ) {
+                SlideHeader(
+                    heading = "nikunj, how much do you need?",
+                    subHeading = "move the dial and set any amount you need up to ₹$maxCreditAmount"
                 )
-                Text(
-                    text = "move the dial and set any amount you need up to ₹$maxCreditAmount",
-                    color = Color(0xFFBDBDBD),
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
 
                 Box(
                     modifier = Modifier
+                        .padding(top = 12.dp)
                         .fillMaxWidth()
                         .background(Color.White, shape = RoundedCornerShape(16.dp))
                         .padding(16.dp)
@@ -177,37 +167,22 @@ fun CircularProgressWithSolidColor(
 }
 
 @Composable
-fun CreditAmountSlideHeader(
+fun StackedBehindCreditAmountSlideHeader(
     modifier: Modifier = Modifier,
     creditAmount: Int = 0
 ){
-    val textColor = Color.DarkGray
-    val iconColor = Color(0xFFB0B0B0)
-
     Row(modifier = modifier
         .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween) {
-        Column {
-            Text(
-                text = "credit amount",
-                color = textColor,
-                fontSize = 12.sp
-            )
-            Text(
-                text = "₹$creditAmount",
-                color = textColor,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-            )
-        }
-        Icon(
-            imageVector = Icons.Default.ArrowDropDown,
-            contentDescription = "Dropdown Arrow",
-            tint = iconColor
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        StackedBehindHeaderContent(
+            heading = "credit amount",
+            subHeading = "₹$creditAmount"
         )
-    }
 
+        DropDownArrow()
+    }
 }
 
 
