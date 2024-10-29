@@ -66,11 +66,12 @@ fun BankAccountSelectionSlide(
                 verticalArrangement = Arrangement.Top
             ) {
                 SlideHeader(
+                    modifier = Modifier.padding(vertical = 10.dp),
                     heading = "where should we send the money?",
                     subHeading = "amount will be credited to this bank account, EMI will also be debited from this bank account"
                 )
 
-                BankAccountRow(modifier = Modifier.padding(top = 26.dp))
+                BankAccountRow(modifier = Modifier.padding(top = 16.dp))
 
                 OutlinedButton(
                     modifier = Modifier.padding(top = 30.dp),

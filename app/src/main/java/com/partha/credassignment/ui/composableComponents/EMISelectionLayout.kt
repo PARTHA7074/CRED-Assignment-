@@ -25,7 +25,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -74,7 +73,7 @@ fun EMISelectionSlide(
                 verticalArrangement = Arrangement.Top
             ) {
                 SlideHeader(
-                    modifier = Modifier.padding(horizontal = 25.dp),
+                    modifier = Modifier.padding(horizontal = 25.dp, vertical = 10.dp),
                     heading = "how do you wish to repay?",
                     subHeading = "choose one of our recommended plan or make your own"
                 )
@@ -146,7 +145,7 @@ fun EMIOptionItem(data: CardData, modifier: Modifier = Modifier, isSelected: Boo
 
     Box(
         modifier = modifier
-            .padding(top = 26.dp, end = 16.dp)
+            .padding(top = 20.dp, end = 16.dp)
             .background(
                 shape = RoundedCornerShape(20.dp),
                 color = data.backgroundColor

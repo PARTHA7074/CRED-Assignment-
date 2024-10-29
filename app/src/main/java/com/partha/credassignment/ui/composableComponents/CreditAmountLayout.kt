@@ -70,6 +70,7 @@ fun CreditAmountSlide(
                 verticalArrangement = Arrangement.Top
             ) {
                 SlideHeader(
+                    modifier = Modifier.padding(vertical = 10.dp),
                     heading = "nikunj, how much do you need?",
                     subHeading = "move the dial and set any amount you need up to ₹$maxCreditAmount"
                 )
