@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -54,7 +55,7 @@ class MainActivity : ComponentActivity() {
 
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     HomeScreen(
-                        modifier = Modifier.padding(innerPadding),
+                        modifier = Modifier.background(color = Color(0xFF141a1a)).padding(innerPadding),
                         totalExpendedCount = totalExpendedCount,
                         onToggleState = { position, isExpand ->
                             totalExpendedCount = if (isExpand) position else position - 1
