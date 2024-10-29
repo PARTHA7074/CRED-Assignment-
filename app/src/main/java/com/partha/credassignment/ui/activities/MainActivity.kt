@@ -1,6 +1,8 @@
 package com.partha.credassignment.ui.activities
 
+import android.content.Context
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
@@ -21,9 +23,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.partha.credassignment.ui.composableComponents.BankAccountSelectionSlide
 import com.partha.credassignment.ui.composableComponents.CreditAmountSlide
 import com.partha.credassignment.ui.composableComponents.EMISelectionSlide
 import com.partha.credassignment.ui.composableComponents.StackView
@@ -54,7 +57,7 @@ class MainActivity : ComponentActivity() {
                         modifier = Modifier.padding(innerPadding),
                         totalExpendedCount = totalExpendedCount,
                         onToggleState = { position, isExpand ->
-                            totalExpendedCount = if (isExpand) position else  position - 1
+                            totalExpendedCount = if (isExpand) position else position - 1
                         }
                     )
                 }
@@ -69,6 +72,8 @@ fun HomeScreen(
     totalExpendedCount: Int,
     onToggleState: (Int, Boolean) -> Unit
 ) {
+    val context = LocalContext.current
+
     //If contents in the StackView increases then item should be added in this list in same order
     val showSliders = listOf(totalExpendedCount >= 1, totalExpendedCount >= 2)
 
@@ -77,9 +82,19 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             showSliders = showSliders,
             contents = listOf(
-                { CreditAmountSlide(color = Color(0xFF14191d), onClick = { onToggleState(1, false) }, isStackedBehind = totalExpendedCount>0) },
-                { EMISelectionSlide(color = Color(0xFF1a1927), onClick = { onToggleState(2, false) }, isStackedBehind = totalExpendedCount>1) },
-                { CreditAmountSlide(color = Color(0xFF23283c)) }
+                {
+                    CreditAmountSlide(
+                        onClick = { onToggleState(1, false) },
+                        isStackedBehind = totalExpendedCount > 0
+                    )
+                },
+                {
+                    EMISelectionSlide(
+                        onClick = { onToggleState(2, false) },
+                        isStackedBehind = totalExpendedCount > 1
+                    )
+                },
+                { BankAccountSelectionSlide() }
             )
         )
 
@@ -89,12 +104,17 @@ fun HomeScreen(
                 .align(Alignment.BottomCenter),
             shape = RoundedCornerShape(12.dp),
             onClick = {
-                if (totalExpendedCount < showSliders.size) onToggleState(totalExpendedCount + 1, true)
+                if (totalExpendedCount < showSliders.size) {
+                    onToggleState(
+                        totalExpendedCount + 1,
+                        true
+                    )
+                } else showNotImplementedToast(context)
             }
         ) {
             Text(
                 modifier = Modifier.padding(vertical = 12.dp),
-                text = when(totalExpendedCount){
+                text = when (totalExpendedCount) {
                     1 -> "Select your bank account"
                     2 -> "Tap for one click KYC"
                     else -> "Proceed to EMI selection"
@@ -111,4 +131,8 @@ fun HomeScreenPreview() {
     CREDAssignmentTheme {
         HomeScreen(onToggleState = { index, value -> }, totalExpendedCount = 1)
     }
+}
+
+fun showNotImplementedToast(context: Context) {
+    Toast.makeText(context, "Not Implemented", Toast.LENGTH_SHORT).show()
 }

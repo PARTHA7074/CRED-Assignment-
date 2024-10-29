@@ -20,6 +20,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,10 +32,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.partha.credassignment.ui.activities.showNotImplementedToast
 
 @Composable
 fun EMISelectionSlide(
@@ -43,6 +46,7 @@ fun EMISelectionSlide(
     onClick: () -> Unit = {},
     isStackedBehind: Boolean = false
 ) {
+    val context = LocalContext.current
     var selectedIndex by remember { mutableIntStateOf(-1) }
     Box(
         modifier = modifier
@@ -95,18 +99,15 @@ fun EMISelectionSlide(
                     }
                 }
 
-                Text(
-                    modifier = Modifier
-                        .padding(start = 25.dp, top = 30.dp)
-                        .border(
-                            width = 1.dp,
-                            shape = CircleShape,
-                            color = Color.White.copy(alpha = .7f)
-                        )
-                        .padding(vertical = 10.dp, horizontal = 16.dp),
-                    text = "Create your own plan",
-                    color = Color.White.copy(alpha = .7f)
-                )
+                OutlinedButton(
+                    modifier = Modifier.padding(start = 25.dp, top = 30.dp),
+                    onClick = { showNotImplementedToast(context) }
+                ) {
+                    Text(
+                        text = "Create your own plan",
+                        color = Color.White.copy(alpha = .5f)
+                    )
+                }
 
             }
         }
